@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+
+
+{% block body %}
+
+<style>
+  .box {
+    /* border: 1px solid #ccc; */
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .image-preview {
+    width: 200px;
+    height: 200px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .image-preview img {
+    width: 100%;
+    height: auto;
+  }
+</style>
+<body>
+
+  <div class="container mt-5">
+    <div class="card h-100">
+      <!-- <div class="row row-cols-1 row-cols-md-2 g-4"> -->
+      {% for cvviews in cvviews %}
+      <div class="col">
+      <div class="card h-100">
+        <div class="card-header bg-primary text-white">
+            <h5 class="card-title m-0" style="text-align: center;">CV Details</h5>
+        </div>
+        <br>
+          
+        <div class="row" style="justify-content: space-between;">
+          <div class="col-md-5">      
+              
+                                
+              <div class="box" style="height: 150px; margin-left: 50px;">
+                  <div class="mb-4">
+                  <h2><p id="name" style="color: blue;"> {{ cvviews.name }}</p></h2>
+                  <p>Mobile: {{ cvviews.phone }} </p> 
+                  <p>Email: {{ cvviews.email }} </p>                 
+                  </div>        
+              </div>
+          
+          </div>
+          <div class="col-md-3" style="margin-right: 100px;">
+          
+              <div class="image-preview" style="height: 150px; width: 150px;">     
+                  {% if cvviews.image %}
+                  <img src=" {{ cvviews.image.url }} " id="profilePicture" alt="{{cvviews.name}}">
+                  {% else %}
+                  <div class="text-center mb-3">No Image</div>
+                  {% endif %}
+                  <div class="text-center mb-3"></div>
+                  
+              </div>
+          </div>
+      </div> 
+         
+      <br>
+        <div class="card-body">
+
+        <p><strong>Career objective:</strong> </p>
+        <p id="experience"> {{ cvviews.career_object }} </p> 
+
+        <br>
+
+          <!-- <p><strong>Name:</strong> {{ cvview.name }} </p> -->
+          <p><strong>Father's Name:</strong> {{ cvviews.father_name }} </p>
+          <p><strong>Mother's Name:</strong> {{ cvviews.mother_name }} </p>
+          <!-- <p><strong>Email:</strong> {{ cvview.email }} </p> -->
+          <!-- <p><strong>Phone:</strong> {{ cvview.phone }}</p> -->
+          <p><strong>Date Of Birth:</strong> {{ cvviews.dob }} </p>
+          <p><strong>Gender:</strong> {{ cvviews.gender }} </p>
+          <p><strong>Present Address:</strong> {{ cvviews.present_address }} </p>
+          <p><strong>Permant Address:</strong> {{ cvviews.permanent_address }} </p>
+          <p><strong>Educational Qualifications:</strong> </p>
+              <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Exam Name</th>
+                      <th>Board Name</th>
+                      <th>Passing Year</th>
+                      <th>Result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>{{ cvviews.exam_name1 }}</th>
+                      <th>{{ cvviews.exam_board1 }}</th>
+                      <th>{{ cvviews.exam_passingyear1 }}</th>
+                      <th>{{ cvviews.exam_result1 }}</th>
+                    </tr>
+                    <tr>
+                      <th>{{ cvviews.exam_name2 }}</th>
+                      <th>{{ cvviews.exam_board2 }}</th>
+                      <th>{{ cvviews.exam_passingyear2 }}</th>
+                      <th>{{ cvviews.exam_result2 }}</th>
+                    </tr>
+
+                    <tr>
+                      <th>{{ cvviews.exam_name3 }}</th>
+                      <th>{{ cvviews.exam_board3 }}</th>
+                      <th>{{ cvviews.exam_passingyear3 }}</th>
+                      <th>{{ cvviews.exam_result3 }}</th>
+                    </tr>
+
+                    <tr>
+                      <th>{{ cvviews.exam_name4 }}</th>
+                      <th>{{ cvviews.exam_board4 }}</th>
+                      <th>{{ cvviews.exam_passingyear4 }}</th>
+                      <th>{{ cvviews.exam_result4 }}</th>
+                    </tr>
+                  </tbody>
+                </table>
+
+          <p><strong>Experience:</strong> </p>
+          <p id="experience">{{ cvviews.experience }}</p>
+          <p><strong>Extra Curriculam:</strong> </p>
+          <p id="extra_curriculam">{{ cvviews.extra_curriculam }}</p>
+          <!-- <p><strong>Scheduler Event:</strong> {{ cvview.exam_result }} </p> -->
+          
+          <!-- <h4>Declaration</h4> -->
+          <p><strong>Declaration:</strong> </p>
+          <p id="declaration">{{ cvviews.declaration }}</p>
+
+          <div class="d-flex justify-content-between">
+              <a href=" {% url 'cvupdate' cvviews.id %}" class="btn btn-success"> Update </a>
+              <a href="#" class="btn btn-primary"> Download </a>
+              <a href=" {% url 'delcvprofile' cvviews.id %}" class="btn btn-danger"> Delete </a>
+          </div>
+        </div>
+      </div>
+    </div>
+      {% endfor %}
+    </div>
+      
+  </div>
+  <br>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<br>
+{% endblock body %}
