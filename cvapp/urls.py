@@ -1,13 +1,14 @@
 from django.urls import path
-from .views import cvcreate, cvview, delcvprofile, cvupdate
+from . import views
 
 
 # Create your urlpatterns here.
 urlpatterns = [
-    path('cvcreate/', cvcreate, name='cvcreate'),
-    path('cvview/', cvview, name='cvview'),
-    path('delcvprofile/<int:id>/', delcvprofile, name='delcvprofile'),
-    path('cvupdate/<int:id>/', cvupdate, name='cvupdate'),
-    # path('pdfview/', pdfview, name='pdfview'),
+    path('cvcreate/', views.cvcreate, name='cvcreate'),
+    path('cvview/', views.cvview, name='cvview'),
+    path('delcvprofile/<int:id>/', views.delcvprofile, name='delcvprofile'),
+    path('cvupdate/<int:id>/', views.cvupdate, name='cvupdate'),
+    path('cv/download/<int:cv_id>/', views.cv_download, name='cv_pdf'),
+
     
 ]

@@ -1,4 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from io import BytesIO
 from django.contrib import messages
 from .models import CvCreate
 import os
@@ -82,7 +85,38 @@ def delcvprofile(request, id):
         cvprofile.delete()
         return redirect('cvview')
     
+def cv_download(request, cv_id):
+    try:
+        cvviews = CvCreate.objects.get(id=cv_id)
+    except CvCreate.DoesNotExist:
+        return HttpResponse("CV does not exist")
 
+    # Create PDF
+    # Load the template
+    template = get_template('cv_temp/cv_temp.html')
+
+    # Define the context for the template
+    context = {
+        'cv': cvviews
+    }
+
+    # Render the template with the context
+    html = template.render(context)
+
+    # Create a BytesIO object and generate the PDF
+    pdf = BytesIO()
+    pisa_status = pisa.CreatePDF(html, dest=pdf)
+
+    # If there was an error, return a HTTP response
+    if pisa_status.err:
+        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    pdf.seek(0)
+
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{cvviews.name}_CV.pdf"'
+
+    return response
 
 def cvupdate(request, id):
     updatecv = CvCreate.objects.get(id = id)

@@ -5,3 +5,4 @@ pillow==10.2.0
 sqlparse==0.4.4
 tzdata==2024.1
 wkhtmltopdf==0.2
+xhtml2pdf==0.2.15
